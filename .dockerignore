@@ -1,3 +1,13 @@
+node_modules
+npm-debug.log
 .git
-/uploads
-/node_modules
+.gitignore
+README.md
+.env
+.nyc_output
+coverage
+.nyc_output
+.coverage
+.coverage/
+uploads
+*.log

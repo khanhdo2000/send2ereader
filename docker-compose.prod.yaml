@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  send2ereader:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: send2ereader
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+    volumes:
+      - uploads_data:/usr/src/app/uploads
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3001/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.send2ereader.rule=Host(`send.mnd.vn`)"
+      - "traefik.http.routers.send2ereader.entrypoints=websecure"
+      - "traefik.http.routers.send2ereader.tls.certresolver=letsencrypt"
+      - "traefik.http.services.send2ereader.loadbalancer.server.port=3001"
+
+volumes:
+  uploads_data:
+    driver: local
