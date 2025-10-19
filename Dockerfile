@@ -18,7 +18,7 @@ RUN wget https://github.com/zzet/fp-docker/raw/f2b41fb0af6bb903afd0e429d5487acc6
     chmod +x /usr/local/bin/kindlegen && \
     rm -rf kindlegen
 
-RUN apk add --no-cache pipx
+RUN apk add --no-cache pipx curl
 
 ENV PATH="$PATH:/root/.local/bin"
 

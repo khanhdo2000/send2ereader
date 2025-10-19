@@ -588,7 +588,7 @@ fs.rm('uploads', {recursive: true}, (err) => {
       console.log("check continue!")
       fn(req, res)
     })
-    server.listen(port)
+    server.listen(port, '0.0.0.0')
     console.log('server is listening on port ' + port)
   })
 })

@@ -15,7 +15,7 @@ services:
     volumes:
       - uploads_data:/usr/src/app/uploads
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3001/"]
+      test: ["CMD", "curl", "-f", "http://localhost:3001/"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -26,6 +26,8 @@ services:
       - "traefik.http.routers.send2ereader.entrypoints=websecure"
       - "traefik.http.routers.send2ereader.tls.certresolver=letsencrypt"
       - "traefik.http.services.send2ereader.loadbalancer.server.port=3001"
+      - "traefik.http.routers.send2ereader.middlewares=send2ereader-headers"
+      - "traefik.http.middlewares.send2ereader-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
 
 volumes:
   uploads_data:
