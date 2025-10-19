@@ -577,7 +577,9 @@ app.use(router.allowedMethods())
 
 
 fs.rm('uploads', {recursive: true}, (err) => {
-  if (err) throw err
+  if (err && err.code !== 'ENOENT') {
+    console.log('Warning: Could not remove uploads directory:', err.message)
+  }
   mkdirp('uploads').then (() => {
     // app.listen(port)
     const fn = app.callback()
